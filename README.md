@@ -13,13 +13,16 @@ git clone git@github.com:jdhayes/funbox.git
 
 ```bash
 cd funbox
-singularity build images/funbox.img Singularity
+sudo singularity build images/funbox.img Singularity # Root privileges are required
 export PATH=$PWD/images:$PATH
 ```
+
+At this point you could transfer the `funbox.img` image to a remote machine if needed.
 
    3. Setup database:
    
 ```bash
+export SINGULARITY_BINDPATH=/path/to/needed/filesystem #optional
 export FUNANNOTATE_DB=/path/to/funannotate_db
 funannotate setup -i all
 ```
