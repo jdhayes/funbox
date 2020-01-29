@@ -53,7 +53,7 @@ echo "Container was created $NOW"
 
 # Get script name
 SCRIPT_NAME=$(basename $0)
-if [ "$SCRIPT_NAME" = 'funannotate' ]; then
+if [ "$SINGULARITY_NAME" = 'funannotate' ]; then
     cmd="funannotate"
 else
     cmd=""
