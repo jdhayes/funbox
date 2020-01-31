@@ -51,6 +51,9 @@ From: ubuntu
 # Print build date
 echo "Container was created $NOW"
 
+# Singularity alredy does this
+# cd ${PWD}
+
 # Get script name
 SCRIPT_NAME=$(basename $0)
 if [ "$SINGULARITY_NAME" = 'funannotate' ]; then
@@ -81,9 +84,6 @@ conda activate funannotate
 # Overwrite conda environment varaibles
 if [[ ! -z "${FUNANNOTATE_DB}" ]]; then export FUNANNOTATE_DB=${FUNANNOTATE_DB}; fi
 if [[ ! -z "${AUGUSTUS_CONFIG_PATH}" ]]; then export AUGUSTUS_CONFIG_PATH=${AUGUSTUS_CONFIG_PATH}; fi
-
-# Move to initial directory
-cd ${OLDPWD}
 
 # Run command
 ${cmd}
