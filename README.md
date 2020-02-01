@@ -18,7 +18,7 @@ sudo singularity build images/funbox.img Singularity # Root privileges are requi
 
 At this point you could transfer the `funbox.img` image and `funannotate` symlink to a remote machine if needed.
 
-   3. Add to install parent directory to PATH:
+   3. Add parent directory to PATH:
    
    ```bash
    export PATH=/path/to/image/and/symlink/directory:$PATH
