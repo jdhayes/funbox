@@ -39,5 +39,5 @@ funannotate test -t all --cpus 1
 ```
 
 A final note, if you want GeneMark, SignalP, and RepeatMasker libraries, then you will need to acquire those files on your own and copy them into this cloned repo and build using the Singularity_full recipie file.
-Here is a good resource describing how to get these files:
+Here is a good resource describing how to get these files (you do not need docker):
     https://funannotate.readthedocs.io/en/latest/docker.html
