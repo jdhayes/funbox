@@ -23,7 +23,8 @@ error_exit()
 # Set some vars
 export SINGULARITY_BINDPATH=/bigdata
 export FUNANNOTATE_DB=/bigdata/operations/jhayes/singularity/funannotate/funannotate_db
-export SINGULARITYENV_PASACONF=/rhome/jhayes/pasa.CONFIG.template
+export PASACONF=/rhome/jhayes/pasa.CONFIG.template
+export GENEMARK_PATH=/opt/genemark/gm_et_linux_64
 
 # Determin CPUS
 if [[ -z ${SLURM_CPUS_ON_NODE} ]]; then

@@ -77,7 +77,7 @@ From: ubuntu:18.04
     #export TRINITY_HOME
     #export EVM_HOME
     #export AUGUSTUS_CONFIG_PATH
-    export GENEMARK_PATH=/opt/genemark/gm_et_linux_64
+    #export GENEMARK_PATH=/opt/genemark/gm_et_linux_64
 
 %runscript
 # Print build date
@@ -116,6 +116,8 @@ conda activate funannotate
 # Overwrite conda environment varaibles
 if [[ ! -z "${FUNANNOTATE_DB}" ]]; then export FUNANNOTATE_DB=${FUNANNOTATE_DB}; fi
 if [[ ! -z "${AUGUSTUS_CONFIG_PATH}" ]]; then export AUGUSTUS_CONFIG_PATH=${AUGUSTUS_CONFIG_PATH}; fi
+if [[ ! -z "${PASACONF}" ]]; then export PASACONF=${PASACONF}; fi
+if [[ ! -z "${GENEMARK_PATH}" ]]; then export GENEMARK_PATH=${GENEMARK_PATH}; fi
 
 # Run command
 ${cmd}
