@@ -23,16 +23,17 @@ From: ubuntu:18.04
     mkdir -p /opt/genemark
     find /tmp -maxdepth 1 -name "gm_et_linux_64.tar.gz" -exec tar -C /opt/genemark -xf {} \;
     find /opt/genemark -name '*.pl' -exec sed -i 's/^#!\/usr\/bin\/perl/#!\/usr\/bin\/env perl/' {} \;
+    rm -f /tmp/gm_et_linux_64.tar.gz
     
     # Install RepBaseRepeatMasker
     mkdir -p /opt/RepBaseRepeatMasker
     find /tmp -maxdepth 1 -name "RepBaseRepeatMaskerEdition*.tar.gz" -exec tar -C /opt/RepBaseRepeatMasker -xf {} \;
-    #rm /tmp/RepBaseRepeatMaskerEdition*.tar.gz
+    rm -f /tmp/RepBaseRepeatMaskerEdition*.tar.gz
 
     # Install signalp
     mkdir -p /opt/signalp
     find /tmp -maxdepth 1 -name "signalp*.tar..gz" -exec tar -C /opt/signalp -xf {} \;
-    #rm /tmp/signalp*.tar.gz
+    rm -f /tmp/signalp*.tar.gz
 
     # Install conda
     curl https://repo.anaconda.com/miniconda/Miniconda2-latest-Linux-x86_64.sh > ~/miniconda.sh
