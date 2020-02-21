@@ -1,5 +1,5 @@
 BootStrap: library
-From: ubuntu
+From: ubuntu:18.04
 
 #%setup
 
@@ -16,26 +16,23 @@ From: ubuntu
 %post
     # Update Ubuntu
     apt update -y
-    apt install -y curl
+    # Install curl and mysql-client
+    apt install -y curl mysql-client
 
     # Install GeneMark (Place license at ~/.gm_key)
-    if [[ -f /tmp/gm_et_linux_64.tar.gz ]]; then
-        mkdir -p /opt/genemark
-        tar -C /opt/genemark -xf /tmp/gm_et_linux_64.tar.gz
-        find /opt/genemark -name '*.pl' -exec sed -i 's/^#!\/usr\/bin\/perl/#!\/usr\/bin\/env perl/' {} \;
-    fi
+    mkdir -p /opt/genemark
+    find /tmp -maxdepth 1 -name "gm_et_linux_64.tar.gz" -exec tar -C /opt/genemark -xf {} \;
+    find /opt/genemark -name '*.pl' -exec sed -i 's/^#!\/usr\/bin\/perl/#!\/usr\/bin\/env perl/' {} \;
     
     # Install RepBaseRepeatMasker
-    if [[ -f /tmp/RepBaseRepeatMaskerEdition-20170127.tar.gz ]]; then
-        mkdir -p /opt/RepBaseRepeatMasker
-        tar -C /opt/RepBaseRepeatMasker -xf /tmp/RepBaseRepeatMaskerEdition-20170127.tar.gz
-    fi
+    mkdir -p /opt/RepBaseRepeatMasker
+    find /tmp -maxdepth 1 -name "RepBaseRepeatMaskerEdition*.tar.gz" -exec tar -C /opt/RepBaseRepeatMasker -xf {} \;
+    #rm /tmp/RepBaseRepeatMaskerEdition*.tar.gz
 
     # Install signalp
-    if [[ -f /tmp/signalp-5.0b.Linux.tar.gz ]]; then
-        mkdir -p /opt/signalp
-        tar -C /opt/signalp -xf /tmp/signalp-5.0b.Linux.tar.gz
-    fi
+    mkdir -p /opt/signalp
+    find /tmp -maxdepth 1 -name "signalp*.tar..gz" -exec tar -C /opt/signalp -xf {} \;
+    #rm /tmp/signalp*.tar.gz
 
     # Install conda
     curl https://repo.anaconda.com/miniconda/Miniconda2-latest-Linux-x86_64.sh > ~/miniconda.sh
