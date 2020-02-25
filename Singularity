@@ -14,6 +14,14 @@ From: ubuntu:18.04
     ./misc/signalp-5.0b.Linux.tar.gz /tmp
 
 %post
+    # Hack to add additional repos
+    echo "deb http://archive.ubuntu.com/ubuntu bionic multiverse
+deb http://archive.ubuntu.com/ubuntu bionic-security multiverse
+deb http://archive.ubuntu.com/ubuntu bionic-updates multiverse
+deb http://archive.ubuntu.com/ubuntu bionic universe
+deb http://archive.ubuntu.com/ubuntu bionic-security universe
+deb http://archive.ubuntu.com/ubuntu bionic-updates universe" >> /etc/apt/sources.list
+
     # Update Ubuntu
     apt update -y
     # Install various softwares
@@ -72,12 +80,15 @@ From: ubuntu:18.04
     #/bin/bash -l -c 'conda activate funannotate; funannotate test -t all --cpus 1'
 
 %environment
-    #export FUNANNOTATE_DB
-    #export PASAHOME
-    #export TRINITY_HOME
-    #export EVM_HOME
-    #export AUGUSTUS_CONFIG_PATH
+    # Manually configure
+    #export FUNANNOTATE_DB=/path/to/funannotate/db
     #export GENEMARK_PATH=/opt/genemark/gm_et_linux_64
+
+    # Preset by conda
+    #export PASAHOME=/opt/miniconda2/envs/funannotate/opt/pasa-2.4.1
+    #export TRINITY_HOME=/opt/miniconda2/envs/funannotate/opt/trinity-2.8.5
+    #export EVM_HOME=/opt/miniconda2/envs/funannotate/opt/evidencemodeler-1.1.1
+    #export AUGUSTUS_CONFIG_PATH=/opt/miniconda2/envs/funannotate/config/
 
 %runscript
 # Print build date
