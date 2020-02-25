@@ -29,7 +29,7 @@ At this point you could transfer the `funbox.img` image and `funannotate` symlin
 ```bash
 export SINGULARITY_BINDPATH=/path/to/needed/filesystem #optional
 export FUNANNOTATE_DB=/path/to/funannotate_db
-funannotate setup -i all
+funannotate setup -i all -b all
 ```
 
    5. Test (replace `--cpus 1` as desired):
