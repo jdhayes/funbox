@@ -5,19 +5,19 @@ From: ubuntu:18.04
 
 %files
     # Copy GeneMask (http://exon.gatech.edu/Genemark/license_download.cgi)
-    #./misc/gm_et_linux_64.tar.gz /tmp
+    ./misc/gm_et_linux_64.tar.gz /tmp
     
     # Copy RepBaseREpeatMasker (http://www.girinst.org/repbase/)
-    #./misc/RepBaseRepeatMaskerEdition-20170127.tar.gz /tmp
+    ./misc/RepBaseRepeatMaskerEdition-20170127.tar.gz /tmp
     
     # Copy signalp (http://www.cbs.dtu.dk/cgi-bin/sw_request?signalp)
-    #./misc/signalp-5.0b.Linux.tar.gz /tmp
+    ./misc/signalp-5.0b.Linux.tar.gz /tmp
 
 %post
     # Update Ubuntu
     apt update -y
-    # Install curl and mysql-client
-    apt install -y curl mysql-client
+    # Install various softwares
+    apt install -y curl mysql-client wget pbzip2
 
     # Install GeneMark (Place license at ~/.gm_key)
     mkdir -p /opt/genemark
