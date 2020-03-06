@@ -25,6 +25,7 @@ export SINGULARITY_BINDPATH=/bigdata,/bigdata/operations/opt/linux:/opt/linux
 export FUNANNOTATE_DB=/bigdata/operations/jhayes/singularity/funannotate/funannotate_db
 export PASACONF=/rhome/jhayes/pasa.CONFIG.template
 export GENEMARK_PATH=/opt/genemark/gm_et_linux_64
+# If needed you can pass more environment vars to funbox by using the prefix 'SINGULARITYENV_'
 
 # Determin CPUS
 if [[ -z ${SLURM_CPUS_ON_NODE} ]]; then
@@ -52,7 +53,7 @@ sleep 10
 cd ${OLD_PWD}
 
 # Update PASA DB config
-sed -i "s/^MYSQLSERVER.*$/MYSQLSERVER=${HOSTNAME}:${PORT}/" ${SINGULARITYENV_PASACONF}
+sed -i "s/^MYSQLSERVER.*$/MYSQLSERVER=${HOSTNAME}:${PORT}/" ${PASACONF}
 
 # Clean
 funannotate clean -i FungiDB-46_AfumigatusAf293_Genome.fasta --minlen 100 -o ref.cleaned.fa || { error_exit "$LINENO: Failed to clean"; }
