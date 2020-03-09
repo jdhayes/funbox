@@ -5,16 +5,16 @@ From: ubuntu:18.04
 
 %files
     # Copy GeneMark (http://exon.gatech.edu/Genemark/license_download.cgi)
-    ./misc/gm_et_linux_64.tar.gz /tmp
+    #./misc/gm_et_linux_64.tar.gz /tmp
     
     # Copy RepBaseREpeatMasker (http://www.girinst.org/repbase/)
-    ./misc/RepBaseRepeatMaskerEdition-20170127.tar.gz /tmp
+    #./misc/RepBaseRepeatMaskerEdition-20170127.tar.gz /tmp
     
     # Copy signalp (http://www.cbs.dtu.dk/cgi-bin/sw_request?signalp)
-    ./misc/signalp-5.0b.Linux.tar.gz /tmp
+    #./misc/signalp-5.0b.Linux.tar.gz /tmp
     
     # Copy Phobius (http://software.sbc.su.se/cgi-bin/request.cgi?project=phobius)
-    ./misc/phobius101_linux.tar.gz /tmp
+    #./misc/phobius101_linux.tar.gz /tmp
 
 %post
     # Hack to add additional repos
@@ -59,7 +59,7 @@ deb http://archive.ubuntu.com/ubuntu bionic-updates universe" >> /etc/apt/source
     mkdir -p ${PHOBIUS_PATH}
     find /tmp -maxdepth 1 -name "phobius101_linux.tar.gz" -exec tar --no-same-owner -C ${PHOBIUS_PATH} -xf {} \;
     find ${PHOBIUS_PATH} -name '*.pl' -exec sed -i 's/^#!\/usr\/bin\/perl.*/#!\/usr\/bin\/env perl/' {} \;
-    rm -f /tmp/signalp*.tar.gz
+    rm -f /tmp/phobius101_linux.tar.gz
     P_PATH=$(dirname $(find ${PHOBIUS_PATH} -type f -name 'phobius.pl') || echo '')
     chmod -R 755 ${P_PATH}
 
