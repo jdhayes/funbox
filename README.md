@@ -38,7 +38,7 @@ funannotate setup -i all -b all
 funannotate test -t all --cpus 1
 ```
 
-A final note, if you want GeneMark, SignalP, and RepeatMasker libraries, then you will need to acquire those files on your own and copy them into the `misc` directory and also modify the Singularity recipe file by uncommenting out the lines in the `%files` section.
+A final note, if you want additional licensed software (ie. SingalP, GeneMark, Phobius, etc...), then you will need to acquire those files on your own and copy them into the `misc` directory and also modify the Singularity recipe file by uncommenting out the corresponding lines in the `%files` section.
 
 Here is a good resource describing how to get these files (you do not need docker):
     https://funannotate.readthedocs.io/en/latest/docker.html
