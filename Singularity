@@ -4,7 +4,7 @@ From: ubuntu:18.04
 #%setup
 
 %files
-    # Copy GeneMask (http://exon.gatech.edu/Genemark/license_download.cgi)
+    # Copy GeneMark (http://exon.gatech.edu/Genemark/license_download.cgi)
     ./misc/gm_et_linux_64.tar.gz /tmp
     
     # Copy RepBaseREpeatMasker (http://www.girinst.org/repbase/)
@@ -12,6 +12,9 @@ From: ubuntu:18.04
     
     # Copy signalp (http://www.cbs.dtu.dk/cgi-bin/sw_request?signalp)
     ./misc/signalp-5.0b.Linux.tar.gz /tmp
+    
+    # Copy Phobius (http://software.sbc.su.se/cgi-bin/request.cgi?project=phobius)
+    ./misc/phobius101_linux.tar.gz /tmp
 
 %post
     # Hack to add additional repos
@@ -27,25 +30,44 @@ deb http://archive.ubuntu.com/ubuntu bionic-updates universe" >> /etc/apt/source
     # Install various softwares
     apt install -y curl mysql-client wget pbzip2
 
+    # Phobius dependancies, use conda perl instead
+    # libgetopt-long-descriptive-perl libfindbin-libs-perl
+
     # Install GeneMark (Place license at ~/.gm_key)
-    mkdir -p /opt/genemark
-    find /tmp -maxdepth 1 -name "gm_et_linux_64.tar.gz" -exec tar -C /opt/genemark -xf {} \;
-    find /opt/genemark -name '*.pl' -exec sed -i 's/^#!\/usr\/bin\/perl/#!\/usr\/bin\/env perl/' {} \;
+    export GENEMARK_PATH=/opt/genemark
+    mkdir -p ${GENEMARK_PATH}
+    find /tmp -maxdepth 1 -name "gm_et_linux_64.tar.gz" -exec tar -C ${GENEMARK_PATH} -xf {} \;
+    find ${GENEMARK_PATH} -name '*.pl' -exec sed -i 's/^#!\/usr\/bin\/perl.*/#!\/usr\/bin\/env perl/' {} \;
     rm -f /tmp/gm_et_linux_64.tar.gz
+    GM_PATH=$(dirname $(find ${GENEMARK_PATH} -type f -name 'gmes_petap.pl') || echo '')
     
     # Install RepBaseRepeatMasker
-    mkdir -p /opt/RepBaseRepeatMasker
-    find /tmp -maxdepth 1 -name "RepBaseRepeatMaskerEdition*.tar.gz" -exec tar -C /opt/RepBaseRepeatMasker -xf {} \;
+    export RBRM_PATH=/opt/RepBaseRepeatMasker
+    mkdir -p ${RBRM_PATH}
+    find /tmp -maxdepth 1 -name "RepBaseRepeatMaskerEdition*.tar.gz" -exec tar -C ${RBRM_PATH} -xf {} \;
     rm -f /tmp/RepBaseRepeatMaskerEdition*.tar.gz
 
     # Install signalp
-    mkdir -p /opt/signalp
-    find /tmp -maxdepth 1 -name "signalp*.tar..gz" -exec tar -C /opt/signalp -xf {} \;
+    export SIGNALP_PATH=/opt/signalp
+    mkdir -p ${SIGNALP_PATH}
+    find /tmp -maxdepth 1 -name "signalp*.tar.gz" -exec tar -C ${SIGNALP_PATH} -xf {} \;
     rm -f /tmp/signalp*.tar.gz
+    SP_PATH=$(dirname $(find ${SIGNALP_PATH} -type f -name 'signalp') || echo '')
+    
+    # Install Phobius
+    export PHOBIUS_PATH=/opt/phobius
+    mkdir -p ${PHOBIUS_PATH}
+    find /tmp -maxdepth 1 -name "phobius101_linux.tar.gz" -exec tar --no-same-owner -C ${PHOBIUS_PATH} -xf {} \;
+    find ${PHOBIUS_PATH} -name '*.pl' -exec sed -i 's/^#!\/usr\/bin\/perl.*/#!\/usr\/bin\/env perl/' {} \;
+    rm -f /tmp/signalp*.tar.gz
+    P_PATH=$(dirname $(find ${PHOBIUS_PATH} -type f -name 'phobius.pl') || echo '')
+    chmod -R 755 ${P_PATH}
 
     # Install conda
     curl https://repo.anaconda.com/miniconda/Miniconda2-latest-Linux-x86_64.sh > ~/miniconda.sh
     bash ~/miniconda.sh -b -p /opt/miniconda2
+
+    # Setup conda activation
     /opt/miniconda2/bin/conda shell.bash hook > /etc/profile.d/miniconda2.sh
     chmod 644 /etc/profile.d/miniconda2.sh
     . /etc/profile
@@ -60,6 +82,10 @@ deb http://archive.ubuntu.com/ubuntu bionic-updates universe" >> /etc/apt/source
 
     # Create environment
     conda create -n funannotate funannotate
+    
+    # Setup conda activate PATHs
+    echo "export PATH=${GM_PATH}:${SP_PATH}:${P_PATH}:\$PATH" >> /opt/miniconda2/envs/funannotate/etc/conda/activate.d/licensed_software.sh
+    chmod 644 /opt/miniconda2/envs/funannotate/etc/conda/activate.d/licensed_software.sh
 
     # Install some R packages
     conda install -n funannotate -c conda-forge r-ggplot2
