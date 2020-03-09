@@ -61,7 +61,7 @@ deb http://archive.ubuntu.com/ubuntu bionic-updates universe" >> /etc/apt/source
     find ${PHOBIUS_PATH} -name '*.pl' -exec sed -i 's/^#!\/usr\/bin\/perl.*/#!\/usr\/bin\/env perl/' {} \;
     rm -f /tmp/phobius101_linux.tar.gz
     P_PATH=$(dirname $(find ${PHOBIUS_PATH} -type f -name 'phobius.pl') || echo '')
-    chmod -R 755 ${P_PATH}
+    chmod -R 755 ${PHOBIUS_PATH}
 
     # Install conda
     curl https://repo.anaconda.com/miniconda/Miniconda2-latest-Linux-x86_64.sh > ~/miniconda.sh
