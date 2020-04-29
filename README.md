@@ -9,6 +9,11 @@ This is a singularity container designed to be a portable and complete funannota
 git clone git@github.com:jdhayes/funbox.git
 ```
 
+If you want additional licensed software (ie. SignalP, GeneMark, Phobius, etc...), then you will need to acquire those files on your own and copy them into the `misc` directory and also modify the Singularity recipe file by uncommenting out the corresponding lines in the `%files` section.
+
+Here is a good resource describing how to get these files (you do not need docker):
+    https://funannotate.readthedocs.io/en/latest/docker.html
+
   2. Build container image:
 
 ```bash
@@ -37,9 +42,3 @@ funannotate setup -i all -b all
 ```bash
 funannotate test -t all --cpus 1
 ```
-
-A final note, if you want additional licensed software (ie. SignalP, GeneMark, Phobius, etc...), then you will need to acquire those files on your own and copy them into the `misc` directory and also modify the Singularity recipe file by uncommenting out the corresponding lines in the `%files` section.
-
-Here is a good resource describing how to get these files (you do not need docker):
-    https://funannotate.readthedocs.io/en/latest/docker.html
-
